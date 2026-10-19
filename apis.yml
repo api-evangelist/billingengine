@@ -1,0 +1,37 @@
+aid: billingengine
+name: BillingEngine
+description: 'BillingEngine is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
+  and added to the network as a stub for full-pipeline profiling.'
+url: https://raw.githubusercontent.com/api-evangelist/billingengine/refs/heads/main/apis.yml
+x-type: company
+x-source: harvest:new-submission
+x-tier: stub
+x-tier-reason: harvest
+specificationVersion: '0.20'
+created: '2026-10-19'
+modified: '2026-10-19'
+tags:
+- Company
+apis: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+common:
+- type: Website
+  url: https://www.billingengine.com/
+- type: Documentation
+  url: https://www.billingengine.com/en/api
+x-submission-notes: 'What does it do?
+
+  BillingEngine is online invoicing software for freelancers and small businesses in Germany. The REST
+  API lets you list, create and change customers and draft invoices, record payments, and download invoices
+  as PDF or as an XML e-invoice (ZUGFeRD / XRechnung, EN 16931). The MCP server (billingengine-mcp) exposes
+  the same functions to AI assistants such as Claude and Cursor. It cannot delete anything and sends nothing
+  to customers. Both need an API key from a paid plan.
+
+
+  Who maint'
+x-submission-probe: OpenAPI 3.1 200, apis.json 200, soft-404 clean
+x-submitted-by: press@billingengine.com (apis.io/add, 2026-10-19)

@@ -1,21 +1,24 @@
 {
   "provider": "billingengine",
   "sources": [
-    "billingengine-openapi.json"
+    "_original/billingengine-openapi.json"
   ],
   "outputs": [
     "billingengine-customers-api-openapi.yml",
     "billingengine-invoices-api-openapi.yml",
     "billingengine-payments-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/billingengine-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "billingengine-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+3 apis, 3 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "billingengine-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "billingengine-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "billingengine-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

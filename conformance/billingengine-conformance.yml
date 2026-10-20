@@ -23,4 +23,7 @@ standards:
 - id: pagination
   conforms: true
   evidence: list operations take page, per_page
+- id: openapi-3.2
+  conforms: true
+  evidence: the document declares 3.2.0
 docs: https://www.billingengine.com/en/privacy_notice

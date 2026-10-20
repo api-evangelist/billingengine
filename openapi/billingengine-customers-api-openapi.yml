@@ -162,7 +162,58 @@ paths:
         '422':
           $ref: '#/components/responses/Unprocessable'
 components:
+  responses:
+    Unprocessable:
+      description: The record is invalid. The messages explain why.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    BadRequest:
+      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    NotFound:
+      description: Record not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Forbidden:
+      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
   schemas:
+    CustomerInput:
+      type: object
+      properties:
+        company:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        vat_number:
+          type: string
+        buyer_reference:
+          type: string
+        address_attributes:
+          $ref: '#/components/schemas/Address'
     Customer:
       type: object
       properties:
@@ -209,26 +260,28 @@ components:
           oneOf:
           - $ref: '#/components/schemas/Address'
           - type: 'null'
-    CustomerInput:
+    Address:
       type: object
       properties:
-        company:
+        line_1:
           type: string
-        first_name:
+        line_2:
+          type:
+          - string
+          - 'null'
+        postal_code:
           type: string
-        last_name:
+        city:
           type: string
-        email:
+        region:
+          type:
+          - string
+          - 'null'
+        country:
           type: string
-          format: email
-        phone:
-          type: string
-        vat_number:
-          type: string
-        buyer_reference:
-          type: string
-        address_attributes:
-          $ref: '#/components/schemas/Address'
+          description: ISO country code such as DE.
+          examples:
+          - DE
     Errors:
       type: object
       required:
@@ -254,59 +307,6 @@ components:
           type: integer
         count:
           type: integer
-    Address:
-      type: object
-      properties:
-        line_1:
-          type: string
-        line_2:
-          type:
-          - string
-          - 'null'
-        postal_code:
-          type: string
-        city:
-          type: string
-        region:
-          type:
-          - string
-          - 'null'
-        country:
-          type: string
-          description: ISO country code such as DE.
-          examples:
-          - DE
-  responses:
-    Forbidden:
-      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    NotFound:
-      description: Record not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    BadRequest:
-      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    Unprocessable:
-      description: The record is invalid. The messages explain why.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
   securitySchemes:
     bearerAuth:
       type: http

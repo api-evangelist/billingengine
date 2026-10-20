@@ -251,8 +251,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Forbidden:
-      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+    Unprocessable:
+      description: The record is invalid. The messages explain why.
       content:
         application/json:
           schema:
@@ -263,8 +263,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Errors'
-    NotFound:
-      description: Record not found.
+    Forbidden:
+      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
       content:
         application/json:
           schema:
@@ -275,13 +275,43 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Errors'
-    Unprocessable:
-      description: The record is invalid. The messages explain why.
+    NotFound:
+      description: Record not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Errors'
   schemas:
+    InvoiceInput:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+          description: Required when creating an invoice.
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ItemInput'
+          description: Required when creating an invoice. When changing a draft, the items replace all existing items.
+        date:
+          type: string
+          format: date
+        due_days:
+          type: integer
+        opening_text:
+          type: string
+        closing_text:
+          type: string
+        service_period_start_date:
+          type: string
+          format: date
+        service_period_end_date:
+          type: string
+          format: date
+        prices_include_tax:
+          type: boolean
+          description: true for gross prices, false for net prices. If it differs from the account setting, the request is refused with 422.
     InvoiceItem:
       type: object
       properties:
@@ -305,15 +335,6 @@ components:
         tax_rate:
           type: number
           description: Tax rate in percent.
-    Errors:
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
     ItemInput:
       type: object
       required:
@@ -334,58 +355,6 @@ components:
         price:
           type: number
           description: Net or gross, depending on the setting "Prices" of the account.
-    Invoice:
-      type: object
-      properties:
-        id:
-          type: integer
-        number:
-          type: string
-        date:
-          type: string
-          format: date
-        due_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        customer:
-          $ref: '#/components/schemas/CustomerReference'
-        delivery_status:
-          type: string
-          enum:
-          - draft
-          - sent
-          - downloaded
-        payment_status:
-          type: string
-          enum:
-          - open
-          - paid
-          - defaulted
-          - cancelled
-          - cancellation
-        overdue:
-          type: boolean
-        cancelled:
-          type: boolean
-        cancellation:
-          type: boolean
-          description: True for a cancellation invoice (credit note) of another invoice.
-        currency:
-          type: string
-          examples:
-          - EUR
-        prices_include_tax:
-          type: boolean
-        net_amount:
-          type: number
-        tax_amount:
-          type: number
-        gross_amount:
-          type: number
-        open_amount:
-          type: number
     InvoiceDetail:
       allOf:
       - $ref: '#/components/schemas/Invoice'
@@ -438,6 +407,67 @@ components:
           type: integer
         name:
           type: string
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: string
+        date:
+          type: string
+          format: date
+        due_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        customer:
+          $ref: '#/components/schemas/CustomerReference'
+        delivery_status:
+          type: string
+          enum:
+          - draft
+          - sent
+          - downloaded
+        payment_status:
+          type: string
+          enum:
+          - open
+          - paid
+          - defaulted
+          - cancelled
+          - cancellation
+        overdue:
+          type: boolean
+        cancelled:
+          type: boolean
+        cancellation:
+          type: boolean
+          description: True for a cancellation invoice (credit note) of another invoice.
+        currency:
+          type: string
+          examples:
+          - EUR
+        prices_include_tax:
+          type: boolean
+        net_amount:
+          type: number
+        tax_amount:
+          type: number
+        gross_amount:
+          type: number
+        open_amount:
+          type: number
+    Errors:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
     Pagination:
       type: object
       required:
@@ -454,36 +484,6 @@ components:
           type: integer
         count:
           type: integer
-    InvoiceInput:
-      type: object
-      properties:
-        customer_id:
-          type: integer
-          description: Required when creating an invoice.
-        items:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/ItemInput'
-          description: Required when creating an invoice. When changing a draft, the items replace all existing items.
-        date:
-          type: string
-          format: date
-        due_days:
-          type: integer
-        opening_text:
-          type: string
-        closing_text:
-          type: string
-        service_period_start_date:
-          type: string
-          format: date
-        service_period_end_date:
-          type: string
-          format: date
-        prices_include_tax:
-          type: boolean
-          description: true for gross prices, false for net prices. If it differs from the account setting, the request is refused with 422.
   securitySchemes:
     bearerAuth:
       type: http

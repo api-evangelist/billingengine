@@ -2,7 +2,9 @@ generated: '2026-10-20'
 method: derived
 generator: derive-problem-types.py
 source:
-- openapi/billingengine-openapi.json
+- openapi/billingengine-customers-api-openapi.yml
+- openapi/billingengine-invoices-api-openapi.yml
+- openapi/billingengine-payments-api-openapi.yml
 format: custom
 envelope:
   media_type: application/json

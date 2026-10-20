@@ -105,40 +105,32 @@ paths:
         '422':
           $ref: '#/components/responses/Unprocessable'
 components:
+  responses:
+    Unprocessable:
+      description: The record is invalid. The messages explain why.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    BadRequest:
+      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Forbidden:
+      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
   schemas:
-    PaymentInput:
-      type: object
-      required:
-      - amount
-      - invoice_ids
-      properties:
-        amount:
-          type: number
-          description: Gross amount.
-        invoice_ids:
-          type: array
-          items:
-            type: integer
-          minItems: 1
-        date:
-          type: string
-          format: date
-          description: Defaults to today.
-        payment_method:
-          type: string
-          enum:
-          - transfer
-          - cash
-          default: transfer
-    Errors:
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
     Payment:
       type: object
       properties:
@@ -171,6 +163,30 @@ components:
           type: array
           items:
             type: integer
+    PaymentInput:
+      type: object
+      required:
+      - amount
+      - invoice_ids
+      properties:
+        amount:
+          type: number
+          description: Gross amount.
+        invoice_ids:
+          type: array
+          items:
+            type: integer
+          minItems: 1
+        date:
+          type: string
+          format: date
+          description: Defaults to today.
+        payment_method:
+          type: string
+          enum:
+          - transfer
+          - cash
+          default: transfer
     CustomerReference:
       type: object
       properties:
@@ -178,6 +194,15 @@ components:
           type: integer
         name:
           type: string
+    Errors:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
     Pagination:
       type: object
       required:
@@ -194,31 +219,6 @@ components:
           type: integer
         count:
           type: integer
-  responses:
-    Forbidden:
-      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    BadRequest:
-      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
-    Unprocessable:
-      description: The record is invalid. The messages explain why.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Errors'
   securitySchemes:
     bearerAuth:
       type: http

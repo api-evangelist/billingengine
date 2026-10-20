@@ -1,0 +1,28 @@
+# BillingEngine
+
+> BillingEngine is online invoicing software for freelancers and small businesses in Germany. Every invoice is created as an e-invoice (ZUGFeRD and XRechnung, EN 16931), incoming e-invoices arrive in a dedicated inbox. It includes DATEV export, accountant access, a REST API and an MCP server. A permanently free plan is available. The interface is available in German and English.
+
+## Product
+
+- [Features](https://www.billingengine.com/en/features): creating e-invoices, receiving e-invoices, quotes, revenue analysis
+- [Pricing](https://www.billingengine.com/en/pricing): plans and what each includes
+- [Help](https://www.billingengine.com/en/help): questions and answers
+
+## Free tools (no sign-up, no file is stored)
+
+- [Tools overview](https://www.billingengine.com/en/tools): e-invoice generator, validator, viewer, Leitweg-ID (routing ID) checker, VAT calculator, default interest calculator
+
+## For developers and AI assistants
+
+- [REST API](https://www.billingengine.com/en/api): documentation of the API
+- [OpenAPI description](https://www.billingengine.com/openapi.json): machine-readable description of the REST API
+- [MCP server](https://www.billingengine.com/en/mcp): connect AI assistants such as Claude or Cursor to your invoices
+
+## Knowledge
+
+- [Glossary](https://www.billingengine.com/en/glossary): e-invoice, XRechnung, ZUGFeRD, EN 16931, GoBD, DATEV and more
+- [Templates](https://www.billingengine.com/en/templates): invoice and business document templates
+
+## German version
+
+- [Deutsche Startseite](https://www.billingengine.com/de)

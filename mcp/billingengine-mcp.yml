@@ -1,0 +1,9 @@
+generated: '2026-10-19'
+method: probed
+source: https://www.billingengine.com/en/mcp
+deployment:
+  mode: local-stdio
+  install: "npx -y billingengine-mcp"
+  package: https://github.com/billingengine/billingengine-mcp
+  auth: api-key
+  verified: probed

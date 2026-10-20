@@ -1,0 +1,494 @@
+openapi: 3.2.0
+info:
+  title: BillingEngine Invoices API
+  version: 1.0.0
+  summary: REST API for customers, invoices and payments of BillingEngine.
+  description: 'BillingEngine is online invoicing software for freelancers and small businesses in Germany. Every invoice is an e-invoice (ZUGFeRD and XRechnung, EN 16931).
+
+
+    The API is available in the paid plans. Authenticate with the API key from your settings as a bearer token. All requests and responses use JSON; amounts are given in the currency of the record, dates as YYYY-MM-DD. Each key may send 60 requests per minute. New invoices are created as drafts and count towards the monthly invoice maximum of the plan.
+
+
+    Documentation: https://www.billingengine.com/en/api'
+  termsOfService: https://www.billingengine.com/en/terms_of_service
+  contact:
+    name: BillingEngine
+    url: https://www.billingengine.com/en/contact
+  license:
+    name: Proprietary
+    url: https://www.billingengine.com/en/terms_of_service
+servers:
+- url: https://www.billingengine.com/api/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Invoices
+  description: Invoices, created as drafts, and their PDF and XML e-invoice downloads.
+paths:
+  /invoices:
+    get:
+      tags:
+      - Invoices
+      operationId: listInvoices
+      summary: List invoices
+      description: All invoices, newest first.
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - draft
+          - open
+          - overdue
+          - paid
+          - cancelled
+          - cancellation
+        description: Filter by status.
+      - name: customer_id
+        in: query
+        schema:
+          type: integer
+        description: Only invoices of this customer.
+      - name: after
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Only invoices dated on or after this day.
+      - name: before
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Only invoices dated on or before this day.
+      - name: number
+        in: query
+        schema:
+          type: string
+        description: Invoice number.
+      - name: page
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number.
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 25
+        description: Records per page, at most 100.
+      responses:
+        '200':
+          description: A page of invoices.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - pagination
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Invoices
+      operationId: createInvoice
+      summary: Create a draft invoice
+      description: Number, language, texts, VAT treatment and missing values are taken from the settings of the account, exactly as in the web form. The invoice stays a draft until it is sent. Prices are net or gross depending on the setting "Prices" of the account; if prices_include_tax differs from that setting, the API refuses the request with 422.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceInput'
+      responses:
+        '201':
+          description: The created invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /invoices/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Record id.
+    get:
+      tags:
+      - Invoices
+      operationId: getInvoice
+      summary: Get an invoice
+      description: The invoice with its items.
+      responses:
+        '200':
+          description: The invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Invoices
+      operationId: updateInvoice
+      summary: Change a draft invoice
+      description: Only draft invoices can be changed. When items are sent they replace all existing items. PUT is accepted as well.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceInput'
+      responses:
+        '200':
+          description: The changed invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /invoices/{id}.pdf:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Record id.
+    get:
+      tags:
+      - Invoices
+      operationId: downloadInvoicePdf
+      summary: Download an invoice as PDF
+      responses:
+        '200':
+          description: The invoice as PDF.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /invoices/{id}.xml:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Record id.
+    get:
+      tags:
+      - Invoices
+      operationId: downloadInvoiceXml
+      summary: Download an invoice as e-invoice XML
+      description: The e-invoice (Factur-X / ZUGFeRD CII XML) of the invoice.
+      responses:
+        '200':
+          description: The e-invoice as XML.
+          content:
+            application/xml:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    NotFound:
+      description: Record not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    BadRequest:
+      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unprocessable:
+      description: The record is invalid. The messages explain why.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+  schemas:
+    InvoiceItem:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        quantity:
+          type: number
+        unit_code:
+          type:
+          - string
+          - 'null'
+          description: Unit code (UN/ECE Recommendation 20), for example C62 for pieces.
+        price:
+          type: number
+        tax_rate:
+          type: number
+          description: Tax rate in percent.
+    Errors:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ItemInput:
+      type: object
+      required:
+      - title
+      - price
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: number
+          default: 1
+        unit_code:
+          type: string
+        tax_rate:
+          type: number
+        price:
+          type: number
+          description: Net or gross, depending on the setting "Prices" of the account.
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: string
+        date:
+          type: string
+          format: date
+        due_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        customer:
+          $ref: '#/components/schemas/CustomerReference'
+        delivery_status:
+          type: string
+          enum:
+          - draft
+          - sent
+          - downloaded
+        payment_status:
+          type: string
+          enum:
+          - open
+          - paid
+          - defaulted
+          - cancelled
+          - cancellation
+        overdue:
+          type: boolean
+        cancelled:
+          type: boolean
+        cancellation:
+          type: boolean
+          description: True for a cancellation invoice (credit note) of another invoice.
+        currency:
+          type: string
+          examples:
+          - EUR
+        prices_include_tax:
+          type: boolean
+        net_amount:
+          type: number
+        tax_amount:
+          type: number
+        gross_amount:
+          type: number
+        open_amount:
+          type: number
+    InvoiceDetail:
+      allOf:
+      - $ref: '#/components/schemas/Invoice'
+      - type: object
+        properties:
+          original_invoice_number:
+            type:
+            - string
+            - 'null'
+          language:
+            type: string
+            examples:
+            - de
+          vat_treatment:
+            type: string
+            enum:
+            - standard
+            - exempt
+            - reverse_charge
+            - intra_community
+            - export_outside_eu
+            - zero_rated
+            - outside_scope
+          service_period_start_date:
+            type:
+            - string
+            - 'null'
+            format: date
+          service_period_end_date:
+            type:
+            - string
+            - 'null'
+            format: date
+          opening_text:
+            type:
+            - string
+            - 'null'
+          closing_text:
+            type:
+            - string
+            - 'null'
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/InvoiceItem'
+    CustomerReference:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Pagination:
+      type: object
+      required:
+      - page
+      - per_page
+      - pages
+      - count
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        pages:
+          type: integer
+        count:
+          type: integer
+    InvoiceInput:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+          description: Required when creating an invoice.
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ItemInput'
+          description: Required when creating an invoice. When changing a draft, the items replace all existing items.
+        date:
+          type: string
+          format: date
+        due_days:
+          type: integer
+        opening_text:
+          type: string
+        closing_text:
+          type: string
+        service_period_start_date:
+          type: string
+          format: date
+        service_period_end_date:
+          type: string
+          format: date
+        prices_include_tax:
+          type: boolean
+          description: true for gross prices, false for net prices. If it differs from the account setting, the request is refused with 422.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'The API key from the settings of your account, sent as "Authorization: Bearer <key>". Only available in the paid plans.'
+externalDocs:
+  description: API documentation
+  url: https://www.billingengine.com/en/api

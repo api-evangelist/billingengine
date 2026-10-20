@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billingengine/main/json-schema/billingengine-invoice-schema.json",
+  "title": "Invoice",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billingengine-openapi.json#/components/schemas/Invoice",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "number": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "due_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "customer": {
+      "$ref": "#/$defs/CustomerReference"
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "downloaded"
+      ]
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "paid",
+        "defaulted",
+        "cancelled",
+        "cancellation"
+      ]
+    },
+    "overdue": {
+      "type": "boolean"
+    },
+    "cancelled": {
+      "type": "boolean"
+    },
+    "cancellation": {
+      "type": "boolean",
+      "description": "True for a cancellation invoice (credit note) of another invoice."
+    },
+    "currency": {
+      "type": "string"
+    },
+    "prices_include_tax": {
+      "type": "boolean"
+    },
+    "net_amount": {
+      "type": "number"
+    },
+    "tax_amount": {
+      "type": "number"
+    },
+    "gross_amount": {
+      "type": "number"
+    },
+    "open_amount": {
+      "type": "number"
+    }
+  },
+  "$defs": {
+    "CustomerReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

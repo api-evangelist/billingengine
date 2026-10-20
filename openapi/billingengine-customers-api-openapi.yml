@@ -1,0 +1,317 @@
+openapi: 3.2.0
+info:
+  title: BillingEngine Customers API
+  version: 1.0.0
+  summary: REST API for customers, invoices and payments of BillingEngine.
+  description: 'BillingEngine is online invoicing software for freelancers and small businesses in Germany. Every invoice is an e-invoice (ZUGFeRD and XRechnung, EN 16931).
+
+
+    The API is available in the paid plans. Authenticate with the API key from your settings as a bearer token. All requests and responses use JSON; amounts are given in the currency of the record, dates as YYYY-MM-DD. Each key may send 60 requests per minute. New invoices are created as drafts and count towards the monthly invoice maximum of the plan.
+
+
+    Documentation: https://www.billingengine.com/en/api'
+  termsOfService: https://www.billingengine.com/en/terms_of_service
+  contact:
+    name: BillingEngine
+    url: https://www.billingengine.com/en/contact
+  license:
+    name: Proprietary
+    url: https://www.billingengine.com/en/terms_of_service
+servers:
+- url: https://www.billingengine.com/api/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: Customers of the account.
+paths:
+  /customers:
+    get:
+      tags:
+      - Customers
+      operationId: listCustomers
+      summary: List customers
+      description: All customers, ordered. The query parameter searches company, names and email.
+      parameters:
+      - name: query
+        in: query
+        schema:
+          type: string
+        description: Search company, names and email.
+      - name: page
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number.
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 25
+        description: Records per page, at most 100.
+      responses:
+        '200':
+          description: A page of customers.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - pagination
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Customers
+      operationId: createCustomer
+      summary: Create a customer
+      description: A new customer needs a company or a last name and an address with line 1, postal code, city and country. The number is assigned automatically.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '201':
+          description: The created customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /customers/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Record id.
+    get:
+      tags:
+      - Customers
+      operationId: getCustomer
+      summary: Get a customer
+      responses:
+        '200':
+          description: The customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Customers
+      operationId: updateCustomer
+      summary: Change a customer
+      description: PUT is accepted as well.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The changed customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type:
+          - string
+          - integer
+          - 'null'
+        name:
+          type: string
+          description: Company, or first and last name.
+        company:
+          type:
+          - string
+          - 'null'
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+        vat_number:
+          type:
+          - string
+          - 'null'
+        buyer_reference:
+          type:
+          - string
+          - 'null'
+          description: Buyer reference (BT-10), for example a Leitweg-ID.
+        address:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          - type: 'null'
+    CustomerInput:
+      type: object
+      properties:
+        company:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        vat_number:
+          type: string
+        buyer_reference:
+          type: string
+        address_attributes:
+          $ref: '#/components/schemas/Address'
+    Errors:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    Pagination:
+      type: object
+      required:
+      - page
+      - per_page
+      - pages
+      - count
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        pages:
+          type: integer
+        count:
+          type: integer
+    Address:
+      type: object
+      properties:
+        line_1:
+          type: string
+        line_2:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type: string
+        city:
+          type: string
+        region:
+          type:
+          - string
+          - 'null'
+        country:
+          type: string
+          description: ISO country code such as DE.
+          examples:
+          - DE
+  responses:
+    Forbidden:
+      description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    NotFound:
+      description: Record not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    BadRequest:
+      description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unprocessable:
+      description: The record is invalid. The messages explain why.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'The API key from the settings of your account, sent as "Authorization: Bearer <key>". Only available in the paid plans.'
+externalDocs:
+  description: API documentation
+  url: https://www.billingengine.com/en/api

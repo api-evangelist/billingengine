@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billingengine/main/json-schema/billingengine-payment-schema.json",
+  "title": "Payment",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billingengine-openapi.json#/components/schemas/Payment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "number": {
+      "type": [
+        "string",
+        "integer",
+        "null"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "transfer",
+        "cash"
+      ]
+    },
+    "cancelled": {
+      "type": "boolean"
+    },
+    "customer": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CustomerReference"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoice_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    }
+  },
+  "$defs": {
+    "CustomerReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

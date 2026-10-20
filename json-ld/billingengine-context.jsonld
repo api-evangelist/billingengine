@@ -1,0 +1,239 @@
+{
+  "@context": {
+    "@vocab": "https://billingengine.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "billingengine": "https://billingengine.com/schema#",
+    "Errors": "billingengine:Errors",
+    "errors": {
+      "@id": "billingengine:errors",
+      "@container": "@list"
+    },
+    "Pagination": "billingengine:Pagination",
+    "page": {
+      "@id": "billingengine:page",
+      "@type": "xsd:integer"
+    },
+    "per_page": {
+      "@id": "billingengine:per_page",
+      "@type": "xsd:integer"
+    },
+    "pages": {
+      "@id": "billingengine:pages",
+      "@type": "xsd:integer"
+    },
+    "count": {
+      "@id": "billingengine:count",
+      "@type": "xsd:integer"
+    },
+    "Address": "billingengine:Address",
+    "line_1": {
+      "@id": "billingengine:line_1",
+      "@type": "xsd:string"
+    },
+    "line_2": {
+      "@id": "billingengine:line_2",
+      "@type": "xsd:string"
+    },
+    "postal_code": {
+      "@id": "billingengine:postal_code",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "billingengine:city",
+      "@type": "xsd:string"
+    },
+    "region": {
+      "@id": "billingengine:region",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "billingengine:country",
+      "@type": "xsd:string"
+    },
+    "Customer": "billingengine:Customer",
+    "id": {
+      "@id": "billingengine:id",
+      "@type": "xsd:integer"
+    },
+    "number": {
+      "@id": "billingengine:number",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "billingengine:name",
+      "@type": "xsd:string"
+    },
+    "company": {
+      "@id": "billingengine:company",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "billingengine:first_name",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "billingengine:last_name",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "billingengine:email",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "billingengine:phone",
+      "@type": "xsd:string"
+    },
+    "vat_number": {
+      "@id": "billingengine:vat_number",
+      "@type": "xsd:string"
+    },
+    "buyer_reference": {
+      "@id": "billingengine:buyer_reference",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "billingengine:address"
+    },
+    "CustomerInput": "billingengine:CustomerInput",
+    "address_attributes": {
+      "@id": "billingengine:address_attributes",
+      "@type": "@id"
+    },
+    "CustomerReference": "billingengine:CustomerReference",
+    "Invoice": "billingengine:Invoice",
+    "date": {
+      "@id": "billingengine:date",
+      "@type": "xsd:date"
+    },
+    "due_date": {
+      "@id": "billingengine:due_date",
+      "@type": "xsd:date"
+    },
+    "customer": {
+      "@id": "billingengine:customer",
+      "@type": "@id"
+    },
+    "delivery_status": {
+      "@id": "billingengine:delivery_status",
+      "@type": "xsd:string"
+    },
+    "payment_status": {
+      "@id": "billingengine:payment_status",
+      "@type": "xsd:string"
+    },
+    "overdue": {
+      "@id": "billingengine:overdue",
+      "@type": "xsd:boolean"
+    },
+    "cancelled": {
+      "@id": "billingengine:cancelled",
+      "@type": "xsd:boolean"
+    },
+    "cancellation": {
+      "@id": "billingengine:cancellation",
+      "@type": "xsd:boolean"
+    },
+    "currency": {
+      "@id": "billingengine:currency",
+      "@type": "xsd:string"
+    },
+    "prices_include_tax": {
+      "@id": "billingengine:prices_include_tax",
+      "@type": "xsd:boolean"
+    },
+    "net_amount": {
+      "@id": "billingengine:net_amount",
+      "@type": "xsd:decimal"
+    },
+    "tax_amount": {
+      "@id": "billingengine:tax_amount",
+      "@type": "xsd:decimal"
+    },
+    "gross_amount": {
+      "@id": "billingengine:gross_amount",
+      "@type": "xsd:decimal"
+    },
+    "open_amount": {
+      "@id": "billingengine:open_amount",
+      "@type": "xsd:decimal"
+    },
+    "InvoiceItem": "billingengine:InvoiceItem",
+    "title": {
+      "@id": "billingengine:title",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "billingengine:description",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "billingengine:quantity",
+      "@type": "xsd:decimal"
+    },
+    "unit_code": {
+      "@id": "billingengine:unit_code",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "billingengine:price",
+      "@type": "xsd:decimal"
+    },
+    "tax_rate": {
+      "@id": "billingengine:tax_rate",
+      "@type": "xsd:decimal"
+    },
+    "ItemInput": "billingengine:ItemInput",
+    "InvoiceInput": "billingengine:InvoiceInput",
+    "customer_id": {
+      "@id": "billingengine:customer_id",
+      "@type": "xsd:integer"
+    },
+    "items": {
+      "@id": "billingengine:items",
+      "@container": "@list"
+    },
+    "due_days": {
+      "@id": "billingengine:due_days",
+      "@type": "xsd:integer"
+    },
+    "opening_text": {
+      "@id": "billingengine:opening_text",
+      "@type": "xsd:string"
+    },
+    "closing_text": {
+      "@id": "billingengine:closing_text",
+      "@type": "xsd:string"
+    },
+    "service_period_start_date": {
+      "@id": "billingengine:service_period_start_date",
+      "@type": "xsd:date"
+    },
+    "service_period_end_date": {
+      "@id": "billingengine:service_period_end_date",
+      "@type": "xsd:date"
+    },
+    "Payment": "billingengine:Payment",
+    "amount": {
+      "@id": "billingengine:amount",
+      "@type": "xsd:decimal"
+    },
+    "payment_method": {
+      "@id": "billingengine:payment_method",
+      "@type": "xsd:string"
+    },
+    "invoice_ids": {
+      "@id": "billingengine:invoice_ids",
+      "@container": "@list"
+    },
+    "PaymentInput": "billingengine:PaymentInput"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "BillingEngine API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects BillingEngine's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-19) from openapi/billingengine-openapi.json.",
+  "dcterms:created": "2026-10-19",
+  "dcterms:source": [
+    "openapi/billingengine-openapi.json"
+  ]
+}

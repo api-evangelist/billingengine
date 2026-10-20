@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billingengine/main/json-schema/billingengine-invoice-detail-schema.json",
+  "title": "InvoiceDetail",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billingengine-openapi.json#/components/schemas/InvoiceDetail",
+  "allOf": [
+    {
+      "$ref": "#/$defs/Invoice"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "original_invoice_number": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "language": {
+          "type": "string"
+        },
+        "vat_treatment": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "exempt",
+            "reverse_charge",
+            "intra_community",
+            "export_outside_eu",
+            "zero_rated",
+            "outside_scope"
+          ]
+        },
+        "service_period_start_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "service_period_end_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "opening_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "closing_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InvoiceItem"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "CustomerReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Invoice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "due_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "customer": {
+          "$ref": "#/$defs/CustomerReference"
+        },
+        "delivery_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "sent",
+            "downloaded"
+          ]
+        },
+        "payment_status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "paid",
+            "defaulted",
+            "cancelled",
+            "cancellation"
+          ]
+        },
+        "overdue": {
+          "type": "boolean"
+        },
+        "cancelled": {
+          "type": "boolean"
+        },
+        "cancellation": {
+          "type": "boolean",
+          "description": "True for a cancellation invoice (credit note) of another invoice."
+        },
+        "currency": {
+          "type": "string"
+        },
+        "prices_include_tax": {
+          "type": "boolean"
+        },
+        "net_amount": {
+          "type": "number"
+        },
+        "tax_amount": {
+          "type": "number"
+        },
+        "gross_amount": {
+          "type": "number"
+        },
+        "open_amount": {
+          "type": "number"
+        }
+      }
+    },
+    "InvoiceItem": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "unit_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Unit code (UN/ECE Recommendation 20), for example C62 for pieces."
+        },
+        "price": {
+          "type": "number"
+        },
+        "tax_rate": {
+          "type": "number",
+          "description": "Tax rate in percent."
+        }
+      }
+    }
+  }
+}

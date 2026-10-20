@@ -1,0 +1,25 @@
+generated: '2026-10-19'
+method: searched
+source: https://www.billingengine.com/en/privacy_notice
+signals:
+  subprocessors:
+    evidence:
+      - source: https://www.billingengine.com/en/privacy_notice
+        http_status: 200
+        fetched: "true"
+        quote: "We have a data processing agreement (DPA) with OpenAI. For more information, see <a href='https://openai.com/policies/data-processing-addendum/' target='_blank' rel='noopener noreferrer'>OpenAI Data Processing Addendum</a>. The sub-processors of OpenAI are listed in the <a href='https://platform.openai.com/subprocessors' target='_blank' rel='noopener noreferrer'>OpenAI Sub-processor List</a>."
+    note: Indicates use of third‑party sub‑processors (OpenAI) and provides links to their DPA and sub‑processor list.
+  ai_transparency:
+    evidence:
+      - source: https://www.billingengine.com/en/privacy_notice
+        http_status: 200
+        fetched: "true"
+        quote: "When you use AI receipt extraction, we send the content needed for extraction (e.g. invoice image or text) to <a href='https://openai.com'>OpenAI</a>. You can switch it off at any time in your settings. OpenAI processes the content outside the EU, in the United States, on the basis of standard contractual clauses. OpenAI keeps requests for up to 30 days for abuse monitoring, and does not use them for training."
+    note: Discloses AI processing, data transfer outside EU, retention period of requests, and that data is not used for training.
+  data_subject_request:
+    evidence:
+      - source: https://www.billingengine.com/en/privacy_notice
+        http_status: 200
+        fetched: "true"
+        quote: "Export your data (PDF, CSV, XLS, XML, DATEV): <a href='/en/settings/edit?section=data'>settings</a>"
+    note: Provides a mechanism for data export, fulfilling data subject access rights.

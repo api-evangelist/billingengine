@@ -1,0 +1,18 @@
+generated: '2026-10-19'
+method: generated
+generator: extract-docs-artifacts.py skills (local)
+source: openapi/billingengine-openapi.json
+skills:
+- file: skills/billingengine-create-invoice.md
+  name: billingengine-create-invoice
+  api: openapi/billingengine-openapi.json
+  operations:
+  - createInvoice
+  - getInvoice
+  - downloadInvoicePdf
+- file: skills/billingengine-record-and-list-payments.md
+  name: billingengine-record-and-list-payments
+  api: openapi/billingengine-openapi.json
+  operations:
+  - createPayment
+  - listPayments

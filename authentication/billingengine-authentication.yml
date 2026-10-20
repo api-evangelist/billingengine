@@ -1,0 +1,14 @@
+generated: '2026-10-19'
+method: derived
+source: openapi/billingengine-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'The API key from the settings of your account, sent as "Authorization: Bearer
+    <key>". Only available in the paid plans.'
+  sources:
+  - openapi/billingengine-openapi.json

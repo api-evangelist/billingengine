@@ -1,0 +1,26 @@
+generated: '2026-10-19'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://www.billingengine.com/de/pricing
+sources:
+- https://www.billingengine.com/de/pricing
+- https://www.billingengine.com/en/pricing
+- https://www.billingengine.com/en/alternatives/sevdesk
+- https://www.billingengine.com/en/alternatives/fastbill
+name: BillingEngine pricing
+audience: business-product
+pricing_basis: per-seat
+plans:
+- name: Free
+  price_text: 0,00 €
+  price: 0
+  billing_period: monthly
+- name: Basic
+  price_text: 6,00 €
+  price: 6
+  billing_period: monthly
+- name: Premium
+  price_text: 12,00 €
+  price: 12
+  billing_period: monthly
+docs: https://www.billingengine.com/de/pricing

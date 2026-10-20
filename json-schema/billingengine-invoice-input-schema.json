@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billingengine/main/json-schema/billingengine-invoice-input-schema.json",
+  "title": "InvoiceInput",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billingengine-openapi.json#/components/schemas/InvoiceInput",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "integer",
+      "description": "Required when creating an invoice."
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ItemInput"
+      },
+      "description": "Required when creating an invoice. When changing a draft, the items replace all existing items."
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "due_days": {
+      "type": "integer"
+    },
+    "opening_text": {
+      "type": "string"
+    },
+    "closing_text": {
+      "type": "string"
+    },
+    "service_period_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "service_period_end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "prices_include_tax": {
+      "type": "boolean",
+      "description": "true for gross prices, false for net prices. If it differs from the account setting, the request is refused with 422."
+    }
+  },
+  "$defs": {
+    "ItemInput": {
+      "type": "object",
+      "required": [
+        "title",
+        "price"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number",
+          "default": 1
+        },
+        "unit_code": {
+          "type": "string"
+        },
+        "tax_rate": {
+          "type": "number"
+        },
+        "price": {
+          "type": "number",
+          "description": "Net or gross, depending on the setting \"Prices\" of the account."
+        }
+      }
+    }
+  }
+}

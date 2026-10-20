@@ -1,0 +1,88 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/billingengine-openapi.json
+vocabulary:
+  name: BillingEngine Domain Vocabulary
+  description: 'Terms declared by BillingEngine''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Customers
+    definition: Customers of the account.
+    tags:
+    - Resource Group
+    source: openapi/billingengine-openapi.json
+  - term: Invoices
+    definition: Invoices, created as drafts, and their PDF and XML e-invoice downloads.
+    tags:
+    - Resource Group
+    source: openapi/billingengine-openapi.json
+  - term: Payments
+    definition: Payments received for sent invoices.
+    tags:
+    - Resource Group
+    source: openapi/billingengine-openapi.json
+  - term: Errors
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Errors
+  - term: Pagination
+    definition: 'Object declared by the contract with fields: page, per_page, pages, count.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Pagination
+  - term: Address
+    definition: 'Object declared by the contract with fields: line_1, line_2, postal_code, city, region, country.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Address
+  - term: Customer
+    definition: 'Object declared by the contract with fields: id, number, name, company, first_name, last_name, email, phone, vat_number, buyer_reference,
+      address.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Customer
+  - term: CustomerInput
+    definition: 'Object declared by the contract with fields: company, first_name, last_name, email, phone, vat_number, buyer_reference, address_attributes.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/CustomerInput
+  - term: CustomerReference
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/CustomerReference
+  - term: Invoice
+    definition: 'Object declared by the contract with fields: id, number, date, due_date, customer, delivery_status, payment_status, overdue,
+      cancelled, cancellation, currency, prices_include_tax. (4 more)'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Invoice
+  - term: InvoiceItem
+    definition: 'Object declared by the contract with fields: number, title, description, quantity, unit_code, price, tax_rate.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/InvoiceItem
+  - term: ItemInput
+    definition: 'Object declared by the contract with fields: title, description, quantity, unit_code, tax_rate, price.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/ItemInput
+  - term: InvoiceInput
+    definition: 'Object declared by the contract with fields: customer_id, items, date, due_days, opening_text, closing_text, service_period_start_date,
+      service_period_end_date, prices_include_tax.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/InvoiceInput
+  - term: Payment
+    definition: 'Object declared by the contract with fields: id, number, date, amount, currency, payment_method, cancelled, customer, invoice_ids.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/Payment
+  - term: PaymentInput
+    definition: 'Object declared by the contract with fields: amount, invoice_ids, date, payment_method.'
+    tags:
+    - Object
+    source: openapi/billingengine-openapi.json#/components/schemas/PaymentInput

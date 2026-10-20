@@ -1,0 +1,48 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/billingengine-openapi.json
+format: custom
+envelope:
+  media_type: application/json
+  schema: Errors
+coverage:
+  operations: 12
+  statuses_declared: 5
+problems:
+- status: 400
+  title: Bad Request
+  description: 'Malformed request: missing parameter, invalid JSON, invalid date or invalid filter.'
+  operations: 12
+  media_types:
+  - application/json
+  schema: Errors
+- status: 401
+  title: Unauthorized
+  description: Missing or invalid API key.
+  operations: 12
+  media_types:
+  - application/json
+  schema: Errors
+- status: 403
+  title: Forbidden
+  description: The API is not available in the Free plan, or the monthly invoice maximum of the plan has been reached.
+  operations: 12
+  media_types:
+  - application/json
+  schema: Errors
+- status: 404
+  title: Not Found
+  description: Record not found.
+  operations: 6
+  media_types:
+  - application/json
+  schema: Errors
+- status: 422
+  title: Unprocessable Content
+  description: The record is invalid. The messages explain why.
+  operations: 5
+  media_types:
+  - application/json
+  schema: Errors

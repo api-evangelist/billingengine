@@ -1,0 +1,21 @@
+{
+  "provider": "billingengine",
+  "sources": [
+    "billingengine-openapi.json"
+  ],
+  "outputs": [
+    "billingengine-customers-api-openapi.yml",
+    "billingengine-invoices-api-openapi.yml",
+    "billingengine-payments-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/billingengine-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "billingengine-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+3 apis, 3 total)"
+  ],
+  "skipped": []
+}

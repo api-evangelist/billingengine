@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billingengine/main/json-schema/billingengine-payment-input-schema.json",
+  "title": "PaymentInput",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billingengine-openapi.json#/components/schemas/PaymentInput",
+  "type": "object",
+  "required": [
+    "amount",
+    "invoice_ids"
+  ],
+  "properties": {
+    "amount": {
+      "type": "number",
+      "description": "Gross amount."
+    },
+    "invoice_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 1
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Defaults to today."
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "transfer",
+        "cash"
+      ],
+      "default": "transfer"
+    }
+  }
+}

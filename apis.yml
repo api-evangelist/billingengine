@@ -1,37 +1,159 @@
 aid: billingengine
 name: BillingEngine
-description: 'BillingEngine is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
-  and added to the network as a stub for full-pipeline profiling.'
+description: BillingEngine provides online invoicing software tailored for freelancers and small businesses in Germany. Its REST API enables listing,
+  creating, and updating customers and draft invoices, recording payments, and downloading invoices as PDF or XML e‑invoices (ZUGFeRD / XRechnung,
+  EN 16931). The platform also offers an MCP server for AI assistants, requiring an API key from a paid plan.
 url: https://raw.githubusercontent.com/api-evangelist/billingengine/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-19 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-19'
 modified: '2026-10-19'
 tags:
-- Company
-apis: []
+- invoicing
+- fintech
+- api
+- germany
+- small-business
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/billingengine-agentic-access.yml
+- type: Plans
+  url: plans/billingengine-plans-pricing.yml
+- type: Spectral
+  url: rules/billingengine-rules.yml
+- type: JSONLD
+  url: json-ld/billingengine-context.jsonld
+- type: Vocabulary
+  url: vocabulary/billingengine-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/billingengine-data-model.yml
+- type: ErrorCatalog
+  url: errors/billingengine-problem-types.yml
+- type: Conformance
+  url: conformance/billingengine-conformance.yml
+- type: LLMsTxt
+  url: llms/billingengine-llms.txt
+- type: MCPServer
+  url: mcp/billingengine-mcp.yml
+- type: Hosts
+  url: hosts/billingengine-hosts.yml
+- type: Vendors
+  url: vendors/billingengine-vendors.yml
+- type: TermsOfService
+  url: https://www.billingengine.com/de/terms_of_service
+- type: Support
+  url: https://www.billingengine.com/de/help
+- type: PrivacyPolicy
+  url: https://www.billingengine.com/de/privacy_notice
+- type: Pricing
+  url: https://www.billingengine.com/de/pricing
+- type: Newsroom
+  url: https://www.billingengine.com/de/news
+- type: Leadership
+  url: https://www.billingengine.com/de/team
+- type: Blog
+  url: https://www.billingengine.com/de/blog
+- type: GitHubOrganization
+  url: https://github.com/billingengine
+- type: Authentication
+  url: authentication/billingengine-authentication.yml
+- type: DomainSecurity
+  url: security/billingengine-domain-security.yml
 - type: Website
   url: https://www.billingengine.com/
 - type: Documentation
   url: https://www.billingengine.com/en/api
+apis:
+- aid: billingengine:billingengine-customers-api
+  name: BillingEngine Customers API
+  description: Customers of the account.
+  humanURL: https://www.billingengine.com/en/api
+  baseURL: https://www.billingengine.com/api/v1
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/billingengine-customers-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-input-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-detail-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-customer-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-input-schema.json
+- aid: billingengine:billingengine-invoices-api
+  name: BillingEngine Invoices API
+  description: Invoices, created as drafts, and their PDF and XML e-invoice downloads.
+  humanURL: https://www.billingengine.com/en/api
+  baseURL: https://www.billingengine.com/api/v1
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/billingengine-invoices-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-input-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-detail-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-customer-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-input-schema.json
+- aid: billingengine:billingengine-payments-api
+  name: BillingEngine Payments API
+  description: Payments received for sent invoices.
+  humanURL: https://www.billingengine.com/en/api
+  baseURL: https://www.billingengine.com/api/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/billingengine-payments-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-input-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-invoice-detail-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-customer-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-schema.json
+  - type: JSONSchema
+    url: json-schema/billingengine-payment-input-schema.json
 x-submission-notes: 'What does it do?
 
-  BillingEngine is online invoicing software for freelancers and small businesses in Germany. The REST
-  API lets you list, create and change customers and draft invoices, record payments, and download invoices
-  as PDF or as an XML e-invoice (ZUGFeRD / XRechnung, EN 16931). The MCP server (billingengine-mcp) exposes
-  the same functions to AI assistants such as Claude and Cursor. It cannot delete anything and sends nothing
-  to customers. Both need an API key from a paid plan.
+  BillingEngine is online invoicing software for freelancers and small businesses in Germany. The REST API lets you list, create and change customers
+  and draft invoices, record payments, and download invoices as PDF or as an XML e-invoice (ZUGFeRD / XRechnung, EN 16931). The MCP server (billingengine-mcp)
+  exposes the same functions to AI assistants such as Claude and Cursor. It cannot delete anything and sends nothing to customers. Both need an
+  API key from a paid plan.
 
 
   Who maint'
 x-submission-probe: OpenAPI 3.1 200, apis.json 200, soft-404 clean
 x-submitted-by: press@billingengine.com (apis.io/add, 2026-10-19)
+x-enrichment:
+  date: '2026-10-19'
+  status: enriched
+  artifacts_added: 23
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

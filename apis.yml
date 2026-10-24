@@ -12,6 +12,11 @@ specificationVersion: '0.20'
 created: '2026-10-19'
 modified: '2026-10-19'
 tags:
+- Invoicing
+- Fintech
+- Germany
+- Small Business
+tags_raw:
 - invoicing
 - fintech
 - api
